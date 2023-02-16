@@ -10,6 +10,5 @@ public interface IEmployeeRepository {
 	Employee getEmployeeById(int empId);
 	List<Employee> getAllEmployees();
 	Employee deleteEmployeeById(int empId);
-	Employee updateEmployee(Employee emp);
 	
 }
