@@ -24,25 +24,34 @@ public class EmployeeController {
 	IEmployeeRepository empRepo;
 	
 	@PostMapping("/addForm")
-	public String addEmployeeForm(Employee emp) {
+	public String addEmployeeForm(Employee emp, Model model) {
+		Employee emp = new Employee();
+		model.addAttribute("emp", emp);
 		return "addEmpForm";
+	}
+	
+	@PostMapping("/addResp")
+	public String addEmployeeResp(Model model, @ModelAttribute("emp") Employee emp) {
+		Employee emp = new Employee();
+		model.addAttribute("emp", emp);
+		return "redirect:/employee/getAll";
 	}
 	
 	@GetMapping("/updateForm")
 	public String updateEmployeeForm(Model model, Employee emp) {
 		Employee employee = empRepo.getEmployeeById(emp.getEmpId());
 		model.addAttribute("uEmp", employee);
-		return "updatedEmpForm";
+		return "updateEmpForm";
 	}
 	
 	@PutMapping("/updateResp")
 	public String updateEmployee(@ModelAttribute("uEmp") Employee emp, Model model) {
-		Employee updatedEmp= empRepo.updateEmployee(emp);
+		Employee updatedEmp= empRepo.addEmployee(emp);
 		model.addAttribute("uEmp", updatedEmp);
-		return "updatedEmpResp";
+		return "redirect:/employee/getAll";
 	}
-	@GetMapping("/getById/{id}")
-	public String getEmployeeById(int empId, Model model) {
+	@GetMapping("/getBy/id")
+	public String getEmployeeById(@RequestParam("empId") int empId, Model model) {
 		Employee emp= empRepo.getEmployeeById(empId);
 		model.addAttribute("employee", emp);
 		return "getEmpByIdResp";
@@ -53,10 +62,10 @@ public class EmployeeController {
 		model.addAttribute("empList", empList);
 		return "empList";
 	}
-	@DeleteMapping("/deleteById/{empId}")
-	public String deleteById(@PathVariable("id") int empId) {
+	@DeleteMapping("/deleteBy/id")
+	public String deleteById(@RequestParam("empId") int empId) {
 		empRepo.deleteEmployeeById(empId);
-		return "redirect:getAll";
+		return "redirect:/employee/getAll";
 	}
 
 }
