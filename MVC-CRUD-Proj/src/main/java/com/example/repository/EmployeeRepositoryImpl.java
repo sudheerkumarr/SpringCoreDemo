@@ -19,20 +19,26 @@ public class EmployeeRepositoryImpl implements IEmployeeRepository {
 	@Autowired
 	private SessionFactory sessionFactory;
 
+	@Transactional
 	public Employee addEmployee(Employee emp) {
-		// get current hibernate session
-		Session currentSession = sessionFactory.getCurrentSession();
-
-		// save the customer ... finally LOL
-		currentSession.save(emp);
+		// Get current hibernate session
+		Session currentSession = sessionFactory.getCurrentSessionn();
+		// Save employee
+		currentSession.saveOrUpdate(emp);
 	}
 
 	public Employee getEmployeeById(int empId) {
 
-		return null;
+		// Get the current hibernate session
+		Session currentSession = sessionFactory.getCurrentSession();
+		
+		// Retrieve/Read from database using the primary key
+		Employee emp = currentSession.get(Employee.class, empId);
+		
+		return emp;
 	}
 
-	@Transactional
+	
 	public List<Employee> getAllEmployees() {
 		// get the current hibernate session
 		Session session = sessionFactory.getCurrentSession();
@@ -41,14 +47,15 @@ public class EmployeeRepositoryImpl implements IEmployeeRepository {
 		return empList;
 	}
 
-	public Employee deleteEmployeeById(int empId) {
-
-		return null;
-	}
-
-	public Employee updateEmployee(Employee emp) {
-
-		return null;
+	public void deleteEmployeeById(int empId) {
+		// get the current hibernate session
+		Session currentSession = sessionFactory.getCurrentSession();
+		
+		// delete object with primary key
+		Query query = currentSession.createQuery("delete from Employee where id=:eId");
+		theQuery.setParameter("eId", empId);
+		
+		query.executeUpdate();
 	}
 
 }
