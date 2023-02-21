@@ -1,20 +1,17 @@
 package com.example.entity;
 
+import java.util.List;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
-import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
 @Entity
 @Getter
 @Setter
-@AllArgsConstructor
-@NoArgsConstructor
 @ToString
 public class Employee {
 	
@@ -22,6 +19,7 @@ public class Employee {
 	@GeneratedValue
 	private int empId;
 	private String empName;
-	private Double salary;
-	
+	private double salary;
+	private List<String> contactNo;
+
 }

@@ -6,13 +6,11 @@ import com.example.entity.Employee;
 
 public interface IEmployeeService {
 	
-
 	Employee addEmployee(Employee emp);
 	Employee updateEmployee(Employee emp);
-	Employee updateEmployeeSalary(int id, Double salary);
-	Employee deleteEmployeeById(int empId);
+	void deleteEmployeeById(int empId);
+	Employee getEmpById(int empId);
+	Employee getEmpByName(String empName);
 	List<Employee> getAllEmployees();
-	Employee getEmployeeById(int empId);
-	Employee getEmployeeByName(String name);
 
 }
